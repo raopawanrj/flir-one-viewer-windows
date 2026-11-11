@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Built app
+build/
+dist/
+*.spec
+
+# Logs and debug output written by the app
+diagnose_log.txt
+flir_log.txt
+first_frame.bin
+usbframe_*.bin
+
+# Captures (keep your data out of the repository)
+FLIR_One_Captures/
+snap_*.png
+snap_*.csv
+snap_*.npz
+rec_*.npz
+*_cooling_*
