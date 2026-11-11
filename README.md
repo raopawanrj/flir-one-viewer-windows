@@ -10,6 +10,48 @@ raw recordings and a cooling analysis. No phone and no FLIR app needed.
 > Unofficial project. Not affiliated with or endorsed by Teledyne FLIR. "FLIR" and
 > "FLIR One" are trademarks of their owner.
 
+> [!IMPORTANT]
+> **You need Zadig before anything else works.** Windows has no driver for this camera.
+> You install one, called **libusbK**, with a free tool named [Zadig](https://zadig.akeo.ie).
+> It takes about two minutes and you only do it once per PC. Without it the app cannot
+> see the camera at all. The exact clicks are in the [setup guide](docs/setup.md#4-install-the-driver-with-zadig).
+
+## What you need
+
+- A Windows PC
+- A FLIR One USB-C camera (USB ID `09CB:1996`), charged and switched on
+- A USB-C **data** cable or adapter
+- [Python 3.10 or newer](https://www.python.org/downloads/)
+- [Zadig](https://zadig.akeo.ie), to install the libusbK driver
+
+## Setup at a glance
+
+```mermaid
+flowchart TD
+    start([Start]) --> py{Python 3.10 or newer<br/>installed?}
+    py -- No --> pyinst[Install Python from python.org<br/>Tick: Add python.exe to PATH]
+    pyinst --> dl
+    py -- Yes --> dl[Download this repository<br/>and unzip it]
+    dl --> cam[Charge the camera, switch it on,<br/>plug it into the PC]
+    cam --> zadig[Zadig: install the libusbK driver<br/>on the FLIR ONE composite parent]
+    zadig --> replug[Unplug and re-plug the camera]
+    replug --> diag[Double-click diagnose.bat]
+    diag --> ok{Last line says<br/>SUCCESS?}
+    ok -- Yes --> run[Double-click run.bat<br/>Press Connect camera]
+    run --> done([Live thermal image])
+    ok -- No --> what{What does it say?}
+    what -- Python was not found --> pyinst
+    what -- FLIR One not found on USB --> power[Check: camera on and charged,<br/>data cable, try another USB port]
+    power --> diag
+    what -- No method could read<br/>its video data --> cycle[Switch the camera off and on,<br/>re-plug it, check the driver in Zadig]
+    cycle --> diag
+    style zadig stroke-width:3px
+```
+
+The Zadig step is the one people miss. Each step is written out in the
+[setup guide](docs/setup.md), and [troubleshooting](docs/troubleshooting.md) covers
+every failure message.
+
 ## Why this exists
 
 The FLIR One is sold as a phone accessory. Plugged into a PC it shows up on USB, but
@@ -42,9 +84,6 @@ open an issue with your `diagnose_log.txt` if it does not work for you.
 6. Double-click `run.bat` and press **Connect camera**.
 
 No camera to hand? `run.bat --sim` starts the app with a simulated camera.
-
-The [setup guide](docs/setup.md) has a flowchart of these steps, and
-[troubleshooting](docs/troubleshooting.md) covers each failure message.
 
 ## What the app does
 
