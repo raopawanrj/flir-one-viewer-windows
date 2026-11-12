@@ -1,4 +1,0 @@
-PySide6-Essentials>=6.6
-numpy>=1.24
-pyusb>=1.2
-libusb-package>=1.0.26
