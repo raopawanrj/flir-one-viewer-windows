@@ -150,6 +150,7 @@ print(np.nanmedian(result["tau"]))                           # Cooling time cons
 - [opportunity-hack/thermaspace.org](https://github.com/opportunity-hack/thermaspace.org)
   confirmed the protocol on real hardware and documented the same wall on macOS.
 - [Zadig](https://zadig.akeo.ie) and libusbK provide the Windows driver.
+- Build with Claude
 
 ## License
 
